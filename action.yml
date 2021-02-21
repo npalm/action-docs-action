@@ -1,6 +1,11 @@
 name: 'Action update docs action'
 description: 'Action updates the action documentation.'
 author: 'Niek Palm'
+
+branding:
+  icon: book-open
+  color: purple
+
 inputs:
   readme:
     description: 'Readme file to update.'
