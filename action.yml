@@ -1,0 +1,20 @@
+name: 'Action update docs action'
+description: 'Action updates the action documentation.'
+author: 'Niek Palm'
+inputs:
+  readme:
+    description: 'Readme file to update.'
+    required: true
+    default: README.md
+  actionFile: 
+    description: 'THe action definition file.'
+    required: true
+    default: action.yml
+  tocLevel:
+    description: "TOC level used for the headers."
+    required: true
+    default: 2
+
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
