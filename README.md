@@ -17,11 +17,11 @@ This action wraps [action-docs](https://github.com/npalm/action-docs) to update 
 <!-- terraform-docs-inputs -->
 ## Inputs
 
-| parameter | description | required | default |
-| - | - | - | - |
-| readme | Readme file to update. | `true` | README.md |
-| actionFile | THe action definition file. | `true` | action.yml |
-| tocLevel | TOC level used for the headers. | `true` | 2 |
+| parameter  | description                     | required | default    |
+| ---------- | ------------------------------- | -------- | ---------- |
+| readme     | Readme file to update.          | `true`   | README.md  |
+| actionFile | THe action definition file.     | `true`   | action.yml |
+| tocLevel   | TOC level used for the headers. | `true`   | 2          |
 
 
 
