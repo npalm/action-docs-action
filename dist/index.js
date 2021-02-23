@@ -455,21 +455,7 @@ exports.toCommandValue = toCommandValue;
 
 /***/ }),
 
-/***/ 436:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.defaultOptions = exports.generateActionMarkdownDocs = void 0;
-var terraform_docs_1 = __nccwpck_require__(2242);
-Object.defineProperty(exports, "generateActionMarkdownDocs", ({ enumerable: true, get: function () { return terraform_docs_1.generateActionMarkdownDocs; } }));
-Object.defineProperty(exports, "defaultOptions", ({ enumerable: true, get: function () { return terraform_docs_1.defaultOptions; } }));
-
-
-/***/ }),
-
-/***/ 2242:
+/***/ 9161:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -531,11 +517,11 @@ function generateActionMarkdownDocs(inputOptions) {
 exports.generateActionMarkdownDocs = generateActionMarkdownDocs;
 function updateReadme(file, text, section) {
     return __awaiter(this, void 0, void 0, function* () {
-        const to = new RegExp(`<!-- terraform-docs-${section} -->(?:(?:\n.*)+<!-- terraform-docs-${section} -->)?`);
+        const to = new RegExp(`<!-- action-docs-${section} -->(?:(?:\n.*)+<!-- action-docs-${section} -->)?`);
         yield replace_in_file_1.default.replaceInFile({
             files: file,
             from: to,
-            to: `<!-- terraform-docs-${section} -->\n${text}\n<!-- terraform-docs-${section} -->`,
+            to: `<!-- action-docs-${section} -->\n${text}\n<!-- action-docs-${section} -->`,
         });
     });
 }
@@ -590,6 +576,20 @@ function generateActionDocs(options) {
         runs: runMd,
     };
 }
+
+
+/***/ }),
+
+/***/ 436:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.defaultOptions = exports.generateActionMarkdownDocs = void 0;
+var action_docs_1 = __nccwpck_require__(9161);
+Object.defineProperty(exports, "generateActionMarkdownDocs", ({ enumerable: true, get: function () { return action_docs_1.generateActionMarkdownDocs; } }));
+Object.defineProperty(exports, "defaultOptions", ({ enumerable: true, get: function () { return action_docs_1.defaultOptions; } }));
 
 
 /***/ }),
