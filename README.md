@@ -9,12 +9,23 @@ This action wraps [action-docs](https://github.com/npalm/action-docs) to update 
 
 ## Usages
 
+The action will update you readme by replacing html comment tags. Add one of more tags based on the following template to your repo:  `<!-- action-docs-(description | inputs | outputs | runs -->` to add the corresponding section.
+
+- `description` : to add/update a section with a descriptions of the action
+- `inputs`: to add/update a section with inputs of the action
+- `outpus`: to add/update a section with outputs of the action
+- `runs`: : to add/update a section of the environment required to run.
+
+In your workflow add the action, see below for the available parameters.
+
 ```yaml
       - uses: npalm/action-docs-action
 ```
 
+The action will not commit any change, to ensure the changes are persisted you can use an action to [commit](https://github.com/stefanzweifel/git-auto-commit-action) or raise a [pull request](https://github.com/peter-evans/create-pull-request).
 
-<!-- terraform-docs-inputs -->
+
+<!-- action-docs-inputs -->
 ## Inputs
 
 | parameter | description | required | default |
@@ -25,16 +36,16 @@ This action wraps [action-docs](https://github.com/npalm/action-docs) to update 
 
 
 
-<!-- terraform-docs-inputs -->
+<!-- action-docs-inputs -->
 
-<!-- terraform-docs-runs -->
+
+<!-- action-docs-runs -->
 ## Runs
 
 This action is an `node12` action.
 
 
-<!-- terraform-docs-runs -->
-
+<!-- action-docs-runs -->
 
 ## License
 
