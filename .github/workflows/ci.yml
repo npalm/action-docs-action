@@ -67,6 +67,7 @@ jobs:
         with:
           commit_message: "chore(ci): Updating dist"
           file_pattern: dist/*
+
       - name: Update readme in the repository
         if: github.event_name != 'pull_request' && matrix.node-version == 12
         uses: stefanzweifel/git-auto-commit-action@v4.8.0
