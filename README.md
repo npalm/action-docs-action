@@ -9,14 +9,14 @@ This action wraps [action-docs](https://github.com/npalm/action-docs) to update 
 
 ## Usages
 
-The action will update you readme by replacing html comment tags. Add the following tags to your readme:
+The action will update you readme by replacing html comment tags. Add one of more tags based on the following template to your repo:  `<!-- action-docs-(description | inputs | outputs | runs -->` to add the corresponding section.
 
-- `<!-- action-docs-description -->` : to add/update a section with the description of the action
-- `<!-- action-docs-inputs -->` : to add/update a section with inputs of the action
-- `<!-- action-docs-outputs -->` : to add/update a section with outputs of the action
-- `<!-- action-docs-runs -->` : to add/update a section of the environment required to run.
+- `description` : to add/update a section with a descriptions of the action
+- `inputs`: to add/update a section with inputs of the action
+- `outpus`: to add/update a section with outputs of the action
+- `runs`: : to add/update a section of the environment required to run.
 
-In your workflow add the action, see below for the available parameters. 
+In your workflow add the action, see below for the available parameters.
 
 ```yaml
       - uses: npalm/action-docs-action
