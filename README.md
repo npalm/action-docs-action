@@ -26,6 +26,23 @@ The action will not commit any change, to ensure the changes are persisted you c
 
 
 <!-- action-docs-inputs -->
+## Inputs
+
+| parameter | description | required | default |
+| - | - | - | - |
+| readme | Readme file to update. | `true` | README.md |
+| actionFile | THe action definition file. | `true` | action.yml |
+| tocLevel | TOC level used for the headers. | `true` | 2 |
+
+
+
+<!-- action-docs-inputs -->
+
+
+<!-- action-docs-runs -->
+## Runs
+
+This action is an `node12` action.
 
 
 <!-- action-docs-runs -->
