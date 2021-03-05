@@ -477,20 +477,27 @@ exports.generateActionMarkdownDocs = exports.defaultOptions = void 0;
 const js_yaml_1 = __nccwpck_require__(1935);
 const fs_1 = __nccwpck_require__(5747);
 const replace_in_file_1 = __importDefault(__nccwpck_require__(5983));
+const linebreak_1 = __nccwpck_require__(9416);
+// enum LineBreak {
+//   CR = "\r",
+//   LF = "\n",
+//   CRLF = "\r'n",
+// }
 exports.defaultOptions = {
     tocLevel: 2,
     actionFile: "action.yml",
     updateReadme: false,
     readmeFile: "README.md",
+    lineBreaks: "LF",
 };
-function createMdTable(data) {
+function createMdTable(options, data) {
     let result = "";
     for (const line of data) {
         result = `${result}|`;
         for (const c of line) {
             result = `${result} ${c} |`;
         }
-        result = `${result}\n`;
+        result = `${result}${linebreak_1.getLineBreak(options.lineBreaks)}`;
     }
     return result;
 }
@@ -506,27 +513,29 @@ function generateActionMarkdownDocs(inputOptions) {
         const options = Object.assign(Object.assign({}, exports.defaultOptions), inputOptions);
         const docs = generateActionDocs(options);
         if (options.updateReadme) {
-            yield updateReadme(options.readmeFile, docs.description, "description");
-            yield updateReadme(options.readmeFile, docs.inputs, "inputs");
-            yield updateReadme(options.readmeFile, docs.outputs, "outputs");
-            yield updateReadme(options.readmeFile, docs.runs, "runs");
+            yield updateReadme(options, docs.description, "description");
+            yield updateReadme(options, docs.inputs, "inputs");
+            yield updateReadme(options, docs.outputs, "outputs");
+            yield updateReadme(options, docs.runs, "runs");
         }
         return `${docs.description + docs.inputs + docs.outputs + docs.runs}`;
     });
 }
 exports.generateActionMarkdownDocs = generateActionMarkdownDocs;
-function updateReadme(file, text, section) {
+function updateReadme(options, text, section) {
     return __awaiter(this, void 0, void 0, function* () {
-        const to = new RegExp(`<!-- action-docs-${section} -->(?:(?:\n.*)+<!-- action-docs-${section} -->)?`);
+        const to = new RegExp(`<!-- action-docs-${section} -->(?:(?:\r\n|\r|\n.*)+<!-- action-docs-${section} -->)?`);
         yield replace_in_file_1.default.replaceInFile({
-            files: file,
+            files: options.readmeFile,
             from: to,
-            to: `<!-- action-docs-${section} -->\n${text}\n<!-- action-docs-${section} -->`,
+            to: `<!-- action-docs-${section} -->${linebreak_1.getLineBreak(options.lineBreaks)}${text}${linebreak_1.getLineBreak(options.lineBreaks)}<!-- action-docs-${section} -->`,
         });
     });
 }
-function createMarkdownSection(tocLevel, data, header) {
-    return data !== "" ? `${getToc(tocLevel)} ${header}\n\n${data}\n\n` : "";
+function createMarkdownSection(options, data, header) {
+    return data !== ""
+        ? `${getToc(options.tocLevel)} ${header}${linebreak_1.getLineBreak(options.lineBreaks)}${linebreak_1.getLineBreak(options.lineBreaks)}${data}${linebreak_1.getLineBreak(options.lineBreaks)}${linebreak_1.getLineBreak(options.lineBreaks)}`
+        : "";
 }
 function generateActionDocs(options) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -563,12 +572,12 @@ function generateActionDocs(options) {
             i++;
         }
     }
-    const inputMdTable = createMdTable(inputHeaders.concat(inputRows));
-    const outputMdTable = createMdTable(outputHeaders.concat(outputRows));
-    const descriptionMd = createMarkdownSection(options.tocLevel, yml.description, "Description");
-    const inputMd = createMarkdownSection(options.tocLevel, inputMdTable, "Inputs");
-    const outputMd = createMarkdownSection(options.tocLevel, outputMdTable, "Outputs");
-    const runMd = createMarkdownSection(options.tocLevel, `This action is an \`${yml.runs.using}\` action.`, "Runs");
+    const inputMdTable = createMdTable(options, inputHeaders.concat(inputRows));
+    const outputMdTable = createMdTable(options, outputHeaders.concat(outputRows));
+    const descriptionMd = createMarkdownSection(options, yml.description, "Description");
+    const inputMd = createMarkdownSection(options, inputMdTable, "Inputs");
+    const outputMd = createMarkdownSection(options, outputMdTable, "Outputs");
+    const runMd = createMarkdownSection(options, `This action is an \`${yml.runs.using}\` action.`, "Runs");
     return {
         description: descriptionMd,
         inputs: inputMd,
@@ -590,6 +599,40 @@ exports.defaultOptions = exports.generateActionMarkdownDocs = void 0;
 var action_docs_1 = __nccwpck_require__(9161);
 Object.defineProperty(exports, "generateActionMarkdownDocs", ({ enumerable: true, get: function () { return action_docs_1.generateActionMarkdownDocs; } }));
 Object.defineProperty(exports, "defaultOptions", ({ enumerable: true, get: function () { return action_docs_1.defaultOptions; } }));
+
+
+/***/ }),
+
+/***/ 9416:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getLineBreakType = exports.getLineBreak = void 0;
+function getLineBreak(lineBreakType) {
+    switch (lineBreakType) {
+        case "CR":
+            return "\r";
+        case "LF":
+            return "\n";
+        case "CRLF":
+            return "\r\n";
+    }
+}
+exports.getLineBreak = getLineBreak;
+function getLineBreakType(value) {
+    if (isLineBreakType(value)) {
+        return value;
+    }
+    else {
+        return "LF";
+    }
+}
+exports.getLineBreakType = getLineBreakType;
+function isLineBreakType(value) {
+    return value === "CR" || value === "LF" || value === "CRLF";
+}
 
 
 /***/ }),
