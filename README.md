@@ -30,9 +30,10 @@ The action will not commit any change, to ensure the changes are persisted you c
 
 | parameter | description | required | default |
 | - | - | - | - |
-| readme | Readme file to update. | `true` | README.md |
-| actionFile | THe action definition file. | `true` | action.yml |
-| tocLevel | TOC level used for the headers. | `true` | 2 |
+| readme | Readme file to update. | `false` | README.md |
+| actionFile | THe action definition file. | `false` | action.yml |
+| tocLevel | TOC level used for the headers. | `false` | 2 |
+| lineBreaks | Line breaks to be used in updated readme (LF|CR|CRLF). | `false` | LF |
 
 
 
@@ -46,7 +47,6 @@ This action is an `node12` action.
 
 
 <!-- action-docs-runs -->
-
 ## License
 
 This project are released under the [MIT License](./LICENSE).

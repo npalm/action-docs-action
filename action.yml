@@ -9,16 +9,20 @@ branding:
 inputs:
   readme:
     description: 'Readme file to update.'
-    required: true
+    required: false
     default: README.md
   actionFile: 
     description: 'THe action definition file.'
-    required: true
+    required: false
     default: action.yml
   tocLevel:
     description: "TOC level used for the headers."
-    required: true
+    required: false
     default: 2
+  lineBreaks:
+    description: "Line breaks to be used in updated readme (LF|CR|CRLF)."
+    required: false
+    default: LF
 
 runs:
   using: 'node12'

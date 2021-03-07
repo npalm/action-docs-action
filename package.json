@@ -28,7 +28,7 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.6",
-    "action-docs": "^0.3.0-beta.1"
+    "action-docs": "^1.0.0"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^5.0.1",
