@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/npalm/action-docs-action/compare/v1.0.0...v1.1.0) (2021-03-07)
+
+
+### Features
+
+* add support for non linux line breaks ([a7131ba](https://github.com/npalm/action-docs-action/commit/a7131ba6b223f11db300966bef905d4068ef26f1))
+
 ## 1.0.0 (2021-02-23)
 
 
