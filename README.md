@@ -25,27 +25,10 @@ In your workflow add the action, see below for the available parameters.
 The action will not commit any change, to ensure the changes are persisted you can use an action to [commit](https://github.com/stefanzweifel/git-auto-commit-action) or raise a [pull request](https://github.com/peter-evans/create-pull-request).
 
 
-<!-- action-docs-inputs -->
-## Inputs
-
-| parameter | description | required | default |
-| - | - | - | - |
-| readme | Readme file to update. | `true` | README.md |
-| actionFile | THe action definition file. | `true` | action.yml |
-| tocLevel | TOC level used for the headers. | `true` | 2 |
+<!-- action-docs-inputs -->undefined## Inputsundefinedundefined| parameter | description | required | default |undefined| - | - | - | - |undefined| readme | Readme file to update. | `false` | README.md |undefined| actionFile | THe action definition file. | `false` | action.yml |undefined| tocLevel | TOC level used for the headers. | `false` | 2 |undefined| lineBreaks | Line breaks to be used in updated readme (LF|CR|CRLF). | `false` | LF |undefinedundefinedundefinedundefined<!-- action-docs-inputs -->
 
 
-
-<!-- action-docs-inputs -->
-
-
-<!-- action-docs-runs -->
-## Runs
-
-This action is an `node12` action.
-
-
-<!-- action-docs-runs -->
+<!-- action-docs-runs -->undefined## RunsundefinedundefinedThis action is an `node12` action.undefinedundefinedundefined<!-- action-docs-runs -->
 
 ## License
 
