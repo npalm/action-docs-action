@@ -27,6 +27,12 @@ The action will not commit any change, to ensure the changes are persisted you c
 
 <!-- action-docs-inputs -->undefined## Inputsundefinedundefined| parameter | description | required | default |undefined| - | - | - | - |undefined| readme | Readme file to update. | `false` | README.md |undefined| actionFile | THe action definition file. | `false` | action.yml |undefined| tocLevel | TOC level used for the headers. | `false` | 2 |undefined| lineBreaks | Line breaks to be used in updated readme (LF|CR|CRLF). | `false` | LF |undefinedundefinedundefinedundefined<!-- action-docs-inputs -->
 
+| parameter  | description                                  | required | default    |
+| ---------- | -------------------------------------------- | -------- | ---------- |
+| readme     | Readme file to update.                       | `false`  | README.md  |
+| actionFile | THe action definition file.                  | `false`  | action.yml |
+| tocLevel   | TOC level used for the headers.              | `false`  | 2          |
+| lineBreaks | Line breaks to be used in updated readme (LF | CR       | CRLF).     | `false` | LF |
 
 <!-- action-docs-runs -->undefined## RunsundefinedundefinedThis action is an `node12` action.undefinedundefinedundefined<!-- action-docs-runs -->
 
