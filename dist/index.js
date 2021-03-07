@@ -44,11 +44,13 @@ function run() {
             const readmeFile = core.getInput('readme', { required: true });
             const tocLevel = parseInt(core.getInput('tocLevel', { required: true }));
             const actionFile = core.getInput('actionFile', { required: true });
+            const lineBreaks = core.getInput('lineBreaks', { required: true });
             yield action_docs_1.generateActionMarkdownDocs({
                 actionFile,
                 readmeFile,
                 updateReadme: true,
                 tocLevel,
+                lineBreaks,
             });
         }
         catch (error) {
@@ -478,11 +480,6 @@ const js_yaml_1 = __nccwpck_require__(1935);
 const fs_1 = __nccwpck_require__(5747);
 const replace_in_file_1 = __importDefault(__nccwpck_require__(5983));
 const linebreak_1 = __nccwpck_require__(9416);
-// enum LineBreak {
-//   CR = "\r",
-//   LF = "\n",
-//   CRLF = "\r'n",
-// }
 exports.defaultOptions = {
     tocLevel: 2,
     actionFile: "action.yml",
@@ -490,9 +487,11 @@ exports.defaultOptions = {
     readmeFile: "README.md",
     lineBreaks: "LF",
 };
-function createMdTable(options, data) {
+function createMdTable(data, options, type) {
+    const tableData = getInputOutput(data, type);
+    const tableArray = tableData.headers.concat(tableData.rows);
     let result = "";
-    for (const line of data) {
+    for (const line of tableArray) {
         result = `${result}|`;
         for (const c of line) {
             result = `${result} ${c} |`;
@@ -522,6 +521,19 @@ function generateActionMarkdownDocs(inputOptions) {
     });
 }
 exports.generateActionMarkdownDocs = generateActionMarkdownDocs;
+function generateActionDocs(options) {
+    const yml = js_yaml_1.load(fs_1.readFileSync(options.actionFile, "utf-8"), {
+        json: true,
+    });
+    const inputMdTable = createMdTable(yml.inputs, options, "input");
+    const outputMdTable = createMdTable(yml.outputs, options, "output");
+    return {
+        description: createMarkdownSection(options, yml.description, "Description"),
+        inputs: createMarkdownSection(options, inputMdTable, "Inputs"),
+        outputs: createMarkdownSection(options, outputMdTable, "Outputs"),
+        runs: createMarkdownSection(options, `This action is an \`${yml.runs.using}\` action.`, "Runs"),
+    };
+}
 function updateReadme(options, text, section) {
     return __awaiter(this, void 0, void 0, function* () {
         const to = new RegExp(`<!-- action-docs-${section} -->(?:(?:\r\n|\r|\n.*)+<!-- action-docs-${section} -->)?`);
@@ -537,53 +549,29 @@ function createMarkdownSection(options, data, header) {
         ? `${getToc(options.tocLevel)} ${header}${linebreak_1.getLineBreak(options.lineBreaks)}${linebreak_1.getLineBreak(options.lineBreaks)}${data}${linebreak_1.getLineBreak(options.lineBreaks)}${linebreak_1.getLineBreak(options.lineBreaks)}`
         : "";
 }
-function generateActionDocs(options) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const yml = js_yaml_1.load(fs_1.readFileSync(options.actionFile, "utf-8"), {
-        json: true,
-    });
-    const inputHeaders = [];
-    const inputRows = [];
-    if (yml.inputs !== undefined) {
-        inputHeaders[0] = ["parameter", "description", "required", "default"];
-        inputHeaders[1] = ["-", "-", "-", "-"];
-        //let i = 0;
-        for (let i = 0; i < Object.keys(yml.inputs).length; i++) {
-            const key = Object.keys(yml.inputs)[i];
-            const input = yml.inputs[key];
-            inputRows[i] = [];
-            inputRows[i].push(key);
-            inputRows[i].push(input.description);
-            inputRows[i].push(input.required ? `\`${String(input.required)}\`` : "`false`");
-            inputRows[i].push(input.default ? input.default : "");
+function getInputOutput(data, type) {
+    const headers = [];
+    const rows = [];
+    if (data === undefined) {
+        return { headers, rows };
+    }
+    headers[0] =
+        type === "input"
+            ? ["parameter", "description", "required", "default"]
+            : ["parameter", "description"];
+    headers[1] = Array(headers[0].length).fill("-");
+    for (let i = 0; i < Object.keys(data).length; i++) {
+        const key = Object.keys(data)[i];
+        const value = data[key];
+        rows[i] = [];
+        rows[i].push(key);
+        rows[i].push(value.description);
+        if (type === "input") {
+            rows[i].push(value.required ? `\`${String(value.required)}\`` : "`false`");
+            rows[i].push(value.default ? value.default : "");
         }
     }
-    const outputHeaders = [];
-    const outputRows = [];
-    if (yml.outputs !== undefined) {
-        outputHeaders[0] = ["parameter", "description"];
-        outputHeaders[1] = ["-", "-"];
-        let i = 0;
-        for (const key of Object.keys(yml.outputs)) {
-            const output = yml.outputs[key];
-            outputRows[i] = [];
-            outputRows[i].push(key);
-            outputRows[i].push(output.description);
-            i++;
-        }
-    }
-    const inputMdTable = createMdTable(options, inputHeaders.concat(inputRows));
-    const outputMdTable = createMdTable(options, outputHeaders.concat(outputRows));
-    const descriptionMd = createMarkdownSection(options, yml.description, "Description");
-    const inputMd = createMarkdownSection(options, inputMdTable, "Inputs");
-    const outputMd = createMarkdownSection(options, outputMdTable, "Outputs");
-    const runMd = createMarkdownSection(options, `This action is an \`${yml.runs.using}\` action.`, "Runs");
-    return {
-        description: descriptionMd,
-        inputs: inputMd,
-        outputs: outputMd,
-        runs: runMd,
-    };
+    return { headers, rows };
 }
 
 
