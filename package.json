@@ -27,7 +27,7 @@
   "author": "Niek Palm",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.6",
+    "@actions/core": "^1.5.0",
     "action-docs": "^1.0.0"
   },
   "devDependencies": {
