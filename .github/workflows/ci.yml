@@ -79,7 +79,7 @@ jobs:
         if:
           contains('
             refs/heads/main
-          ', github.ref) && matrix.node-version == 12
+          ', github.ref) && matrix.node-version == 14
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: yarn release

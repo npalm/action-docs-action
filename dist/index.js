@@ -44,13 +44,14 @@ function run() {
             const tocLevel = parseInt(core.getInput('tocLevel', { required: true }));
             const actionFile = core.getInput('actionFile', { required: true });
             const lineBreaks = core.getInput('lineBreaks', { required: true });
-            yield action_docs_1.generateActionMarkdownDocs({
+            yield (0, action_docs_1.generateActionMarkdownDocs)({
                 actionFile,
                 readmeFile,
                 updateReadme: true,
                 tocLevel,
                 lineBreaks,
             });
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         }
         catch (error) {
             core.debug(error);
