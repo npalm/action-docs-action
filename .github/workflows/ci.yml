@@ -10,18 +10,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: ["12", "14"]
+
     steps:
       - uses: actions/checkout@v2
 
       - uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 14.18.1
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --ignore-engines
 
       - name: Check format and lint
         run: yarn run format-check && yarn lint
@@ -62,14 +60,14 @@ jobs:
               body: output
             })
       - name: Update dist in the repository
-        if: github.event_name != 'pull_request' && matrix.node-version == 12
+        if: github.event_name != 'pull_request'
         uses: stefanzweifel/git-auto-commit-action@v4.8.0
         with:
           commit_message: "chore(ci): Updating dist"
           file_pattern: dist/*
 
       - name: Update readme in the repository
-        if: github.event_name != 'pull_request' && matrix.node-version == 12
+        if: github.event_name != 'pull_request'
         uses: stefanzweifel/git-auto-commit-action@v4.8.0
         with:
           commit_message: "chore(ci): Updating README"
@@ -79,7 +77,7 @@ jobs:
         if:
           contains('
             refs/heads/main
-          ', github.ref) && matrix.node-version == 12
+          ', github.ref)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: yarn release
