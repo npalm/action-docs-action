@@ -33,7 +33,7 @@ The action will not commit any change, to ensure the changes are persisted you c
 | readme | Readme file to update. | `false` | README.md |
 | actionFile | THe action definition file. | `false` | action.yml |
 | tocLevel | TOC level used for the headers. | `false` | 2 |
-| lineBreaks | Line breaks to be used in updated readme (LF|CR|CRLF). | `false` | LF |
+| lineBreaks | Line breaks to be used in updated readme (LF\|CR\|CRLF). | `false` | LF |
 
 
 
