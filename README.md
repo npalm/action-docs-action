@@ -1,5 +1,5 @@
 <p>
-  <a href="https://github.com/npalm/action-docs-action/actions"><img alt="action-docs-action status" src="https://github.com/npalm/action-docs-action/workflows/build-test/badge.svg"></a>
+  <a href="https://github.com/npalm/action-docs-action/actions"><img alt="action-docs-action status" src="https://github.com/npalm/action-docs-action/actions/workflows/ci.yml/badge.svg"></a>
 </p>
 
 # Action to update action documentation <!-- omit in toc -->
