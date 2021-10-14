@@ -15,7 +15,8 @@ async function run(): Promise<void> {
       tocLevel,
       lineBreaks,
     });
-  } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
     core.debug(error);
     core.setFailed(error.message);
   }
