@@ -20,7 +20,7 @@ inputs:
     required: false
     default: 2
   lineBreaks:
-    description: "Line breaks to be used in updated readme (LF|CR|CRLF)."
+    description: "Line breaks to be used in updated readme (LF, CR or CRLF)."
     required: false
     default: LF
 
