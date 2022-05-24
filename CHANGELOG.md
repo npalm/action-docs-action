@@ -1,3 +1,15 @@
+## [1.2.0](https://github.com/npalm/action-docs-action/compare/v1.1.0...v1.2.0) (2022-05-24)
+
+
+### Features
+
+* Update to node 16 ([26cfe52](https://github.com/npalm/action-docs-action/commit/26cfe5225b2d0b846aeaf304f4f7a2c2e5a41b1d))
+
+
+### Bug Fixes
+
+* upgrade dependencies ([#131](https://github.com/npalm/action-docs-action/issues/131)) ([d79c71d](https://github.com/npalm/action-docs-action/commit/d79c71d4463ac98434e4474f89810496f9b22bda))
+
 ## [1.1.0](https://github.com/npalm/action-docs-action/compare/v1.0.0...v1.1.0) (2021-03-07)
 
 
