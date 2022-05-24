@@ -27,27 +27,27 @@
   "author": "Niek Palm",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.5.0",
-    "action-docs": "^1.0.0"
+    "@actions/core": "^1.8.2",
+    "action-docs": "^1.0.4"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "^6.0.0",
-    "@semantic-release/commit-analyzer": "^9.0.1",
-    "@semantic-release/exec": "^6.0.1",
-    "@semantic-release/git": "^10.0.0",
-    "@semantic-release/github": "^8.0.1",
-    "@semantic-release/npm": "^8.0.0",
-    "@semantic-release/release-notes-generator": "^10.0.2",
-    "@types/node": "^16.6.2",
-    "@typescript-eslint/parser": "^4.27.0",
-    "@vercel/ncc": "^0.31.1",
-    "conventional-changelog-conventionalcommits": "^4.6.0",
-    "eslint": "^7.28.0",
-    "eslint-plugin-github": "^4.1.2",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^8.0.4",
+    "@semantic-release/npm": "^9.0.1",
+    "@semantic-release/release-notes-generator": "^10.0.3",
+    "@types/node": "^17.0.35",
+    "@typescript-eslint/parser": "^5.26.0",
+    "@vercel/ncc": "^0.33.4",
+    "conventional-changelog-conventionalcommits": "^4.6.3",
+    "eslint": "^8.16.0",
+    "eslint-plugin-github": "^4.3.6",
     "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "2.3.2",
-    "semantic-release": "^18.0.0",
+    "prettier": "2.6.2",
+    "semantic-release": "^19.0.2",
     "ts-node-dev": "^1.1.8",
-    "typescript": "^4.3.2"
+    "typescript": "^4.6.4"
   }
 }
