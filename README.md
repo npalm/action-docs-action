@@ -43,7 +43,7 @@ The action will not commit any change, to ensure the changes are persisted you c
 <!-- action-docs-runs -->
 ## Runs
 
-This action is an `node12` action.
+This action is a `node16` action.
 
 
 <!-- action-docs-runs -->
