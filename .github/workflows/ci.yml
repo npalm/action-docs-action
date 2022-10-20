@@ -37,7 +37,7 @@ jobs:
           echo "files=$(git ls-files -m)" >>$GITHUB_OUTPUT
           echo "count=$(git ls-files -m | wc -l)" >>$GITHUB_OUTPUT
 
-      - uses: actions/github-script@v6.1.0
+      - uses: actions/github-script@v6.3.3
         if: github.event_name == 'pull_request' && steps.changes.outputs.count != 0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
