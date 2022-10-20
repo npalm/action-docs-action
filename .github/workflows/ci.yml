@@ -34,8 +34,8 @@ jobs:
       - name: Check for modified files
         id: changes
         run: |
-          echo "::set-output name=files::$(git ls-files -m)"
-          echo "::set-output name=count::$(git ls-files -m | wc -l)"
+          echo "files=$(git ls-files -m)" >>$GITHUB_OUTPUT
+          echo "count=$(git ls-files -m | wc -l)" >>$GITHUB_OUTPUT
 
       - uses: actions/github-script@v6.1.0
         if: github.event_name == 'pull_request' && steps.changes.outputs.count != 0
@@ -53,7 +53,7 @@ jobs:
             
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
               
-            github.issues.createComment({
+            await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
