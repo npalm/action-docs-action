@@ -29,14 +29,11 @@ The action will not commit any change, to ensure the changes are persisted you c
 ## Inputs
 
 | parameter | description | required | default |
-| - | - | - | - |
+| --- | --- | --- | --- |
 | readme | Readme file to update. | `false` | README.md |
 | actionFile | THe action definition file. | `false` | action.yml |
 | tocLevel | TOC level used for the headers. | `false` | 2 |
 | lineBreaks | Line breaks to be used in updated readme (LF|CR|CRLF). | `false` | LF |
-
-
-
 <!-- action-docs-inputs -->
 
 
@@ -44,8 +41,6 @@ The action will not commit any change, to ensure the changes are persisted you c
 ## Runs
 
 This action is a `node16` action.
-
-
 <!-- action-docs-runs -->
 ## License
 
