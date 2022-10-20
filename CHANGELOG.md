@@ -1,3 +1,10 @@
+## [1.3.0](https://github.com/npalm/action-docs-action/compare/v1.2.0...v1.3.0) (2022-10-20)
+
+
+### Features
+
+* Upgrade action-docs cli to 1.1.0 ([#287](https://github.com/npalm/action-docs-action/issues/287)) ([566f473](https://github.com/npalm/action-docs-action/commit/566f4737ce4edc09b076a5c41367189678bbc3fc))
+
 ## [1.2.0](https://github.com/npalm/action-docs-action/compare/v1.1.0...v1.2.0) (2022-05-24)
 
 
