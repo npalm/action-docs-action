@@ -38,7 +38,7 @@
     "@semantic-release/github": "^8.0.7",
     "@semantic-release/npm": "^9.0.1",
     "@semantic-release/release-notes-generator": "^10.0.3",
-    "@types/node": "^18.11.13",
+    "@types/node": "^18.14.1",
     "@typescript-eslint/parser": "^5.46.0",
     "@vercel/ncc": "^0.34.0",
     "conventional-changelog-conventionalcommits": "^5.0.0",
