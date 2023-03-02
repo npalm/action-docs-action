@@ -1866,7 +1866,7 @@ function createMdTable(data, options, type) {
     for (const line of tableArray) {
         result = `${result}|`;
         for (const c of line) {
-            result = `${result} ${c} |`;
+            result = `${result} ${c.replace(/(\r\n|\n|\r)/gm, " ")} |`;
         }
         result = `${result}${(0, linebreak_1.getLineBreak)(options.lineBreaks)}`;
     }
