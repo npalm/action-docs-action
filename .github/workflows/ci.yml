@@ -10,13 +10,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [16, 18]
 
     steps:
       - uses: actions/checkout@v3
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
         run: yarn install --ignore-engines
@@ -33,12 +37,13 @@ jobs:
 
       - name: Check for modified files
         id: changes
+        if: matrix.node-version == 18
         run: |
           echo "files=$(git ls-files -m)" >>$GITHUB_OUTPUT
           echo "count=$(git ls-files -m | wc -l)" >>$GITHUB_OUTPUT
 
       - uses: actions/github-script@v6.3.3
-        if: github.event_name == 'pull_request' && steps.changes.outputs.count != 0
+        if: github.event_name == 'pull_request' && steps.changes.outputs.count != 0 && matrix.node-version == 18
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -60,14 +65,14 @@ jobs:
               body: output
             })
       - name: Update dist in the repository
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && matrix.node-version == 18
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
         with:
           commit_message: "chore(ci): Updating dist"
           file_pattern: dist/*
 
       - name: Update readme in the repository
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && matrix.node-version == 18
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
         with:
           commit_message: "chore(ci): Updating README"
@@ -77,7 +82,7 @@ jobs:
         if:
           contains('
             refs/heads/main
-          ', github.ref)
+          ', github.ref) && matrix.node-version == 18
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: yarn release
