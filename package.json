@@ -28,26 +28,26 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.10.0",
-    "action-docs": "^1.1.0"
+    "action-docs": "^1.2.0"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/changelog": "^6.0.2",
     "@semantic-release/commit-analyzer": "^9.0.2",
     "@semantic-release/exec": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^8.0.6",
-    "@semantic-release/npm": "^9.0.1",
+    "@semantic-release/github": "^8.0.7",
+    "@semantic-release/npm": "^9.0.2",
     "@semantic-release/release-notes-generator": "^10.0.3",
-    "@types/node": "^18.11.2",
-    "@typescript-eslint/parser": "^5.40.1",
-    "@vercel/ncc": "^0.34.0",
+    "@types/node": "^18.14.4",
+    "@typescript-eslint/parser": "^5.54.0",
+    "@vercel/ncc": "^0.36.1",
     "conventional-changelog-conventionalcommits": "^5.0.0",
-    "eslint": "^8.25.0",
-    "eslint-plugin-github": "^4.4.0",
+    "eslint": "^8.35.0",
+    "eslint-plugin-github": "^4.6.1",
     "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "2.7.1",
-    "semantic-release": "^19.0.5",
+    "prettier": "2.8.4",
+    "semantic-release": "^20.1.1",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^4.8.4"
+    "typescript": "^4.9.5"
   }
 }

@@ -37,7 +37,7 @@ jobs:
           echo "files=$(git ls-files -m)" >>$GITHUB_OUTPUT
           echo "count=$(git ls-files -m | wc -l)" >>$GITHUB_OUTPUT
 
-      - uses: actions/github-script@v6.1.0
+      - uses: actions/github-script@v6.3.3
         if: github.event_name == 'pull_request' && steps.changes.outputs.count != 0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -61,14 +61,14 @@ jobs:
             })
       - name: Update dist in the repository
         if: github.event_name != 'pull_request'
-        uses: stefanzweifel/git-auto-commit-action@v4.14.1
+        uses: stefanzweifel/git-auto-commit-action@v4.16.0
         with:
           commit_message: "chore(ci): Updating dist"
           file_pattern: dist/*
 
       - name: Update readme in the repository
         if: github.event_name != 'pull_request'
-        uses: stefanzweifel/git-auto-commit-action@v4.14.1
+        uses: stefanzweifel/git-auto-commit-action@v4.16.0
         with:
           commit_message: "chore(ci): Updating README"
           file_pattern: README.md
