@@ -1,3 +1,10 @@
+## [1.4.0](https://github.com/npalm/action-docs-action/compare/v1.3.0...v1.4.0) (2023-03-02)
+
+
+### Features
+
+* Support multi-line strings ([#356](https://github.com/npalm/action-docs-action/issues/356)) ([52d5d81](https://github.com/npalm/action-docs-action/commit/52d5d817a18b108fb559fd3d25c95a2c56ef7d9c))
+
 ## [1.3.0](https://github.com/npalm/action-docs-action/compare/v1.2.0...v1.3.0) (2022-10-20)
 
 
