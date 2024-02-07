@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - develop
   pull_request:
     
 
@@ -13,17 +12,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [16, 18]
+        node-version: [20]
+    permissions:
+      pull-requests: write
+      contents: write
 
     steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # ratchet:actions/checkout@v3
+      - uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # ratchet:actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20
 
+      # build and test action
       - name: Install dependencies
-        run: yarn install --ignore-engines
+        run: yarn install --frozen-lockfile
 
       - name: Check format and lint
         run: yarn run format-check && yarn lint
@@ -32,57 +34,50 @@ jobs:
         run: yarn build && yarn run package
 
       - name: Update docs
-        uses: './'
-      - run: cat README.md
-
-      - name: Check for modified files
-        id: changes
-        if: matrix.node-version == 18
-        run: |
-          echo "files=$(git ls-files -m)" >>$GITHUB_OUTPUT
-          echo "count=$(git ls-files -m | wc -l)" >>$GITHUB_OUTPUT
-
-      - uses: actions/github-script@v6.4.1
-        if: github.event_name == 'pull_request' && steps.changes.outputs.count != 0 && matrix.node-version == 18
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const output = `#### Changes detected
-            Please verify you have updated the files below.
-            
-            <details><summary>The following files are changed during the build</summary>
-            
-            \`\`\`${{ steps.changes.outputs.files }}\`\`\`
-            
-            </details>
-            
-            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
-              
-            await github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: output
-            })
+        uses: './'        
+  
       - name: Update dist in the repository
-        if: github.event_name != 'pull_request' && matrix.node-version == 18
-        uses: stefanzweifel/git-auto-commit-action@v4.16.0
-        with:
-          commit_message: "chore(ci): Updating dist"
-          file_pattern: dist/*
+        if: github.ref != 'refs/heads/main'
 
-      - name: Update readme in the repository
-        if: github.event_name != 'pull_request' && matrix.node-version == 18
-        uses: stefanzweifel/git-auto-commit-action@v4.16.0
+        uses: stefanzweifel/git-auto-commit-action@8756aa072ef5b4a080af5dc8fef36c5d586e521d # ratchet:stefanzweifel/git-auto-commit-action@v5.0.0
         with:
-          commit_message: "chore(ci): Updating README"
-          file_pattern: README.md
+          commit_message: 'chore(ci): Updating dist and docs'
+          file_pattern: 'dist/* README.md'
+
+      - name: Create Pull Request (main branch only)
+        if: github.ref == 'refs/heads/main'
+        uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # ratchet:peter-evans/create-pull-request@v5.0.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore(ci): Updating dist and docs'
+          title: 'chore(ci): Updating dist and docs'
+          branch: update-docs
+          branch-suffix: random
+          base: ${{ github.event.pull_request.base.ref }}
+          delete-branch: true
+
+  release:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get app installation token
+        uses: npalm/action-app-token@dd4bb16d91ced5659bc618705c96b822c5a42136 # v1.1.0
+        id: app-token
+        with:
+          appId: ${{ vars.APP_ID }}
+          appPrivateKeyBase64: ${{ secrets.APP_PRIVATE_KEY_BASE64 }}
+          appInstallationType: repo
+          appInstallationValue: ${{ github.repository }}
+
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # ratchet:actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Release
-        if:
-          contains('
-            refs/heads/main
-          ', github.ref) && matrix.node-version == 18
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn release
+        uses: google-github-actions/release-please-action@e0b9d1885d92e9a93d5ce8656de60e3b806e542c # ratchet:google-github-actions/release-please-action@v3
+        id: release
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          release-type: simple
