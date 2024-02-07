@@ -5,6 +5,17 @@
 
 * Support multi-line strings ([#356](https://github.com/npalm/action-docs-action/issues/356)) ([52d5d81](https://github.com/npalm/action-docs-action/commit/52d5d817a18b108fb559fd3d25c95a2c56ef7d9c))
 
+## [2.0.0](https://github.com/npalm/action-docs-action/compare/v1.4.0...v2.0.0) (2024-02-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* migrate to node20 and action-docs 2.0.0 ([#407](https://github.com/npalm/action-docs-action/issues/407))
+
+### Features
+
+* migrate to node20 and action-docs 2.0.0 ([#407](https://github.com/npalm/action-docs-action/issues/407)) ([de57bfe](https://github.com/npalm/action-docs-action/commit/de57bfe199bcaf307e4e0f3b0556453dc65f1ca5))
+
 ## [1.3.0](https://github.com/npalm/action-docs-action/compare/v1.2.0...v1.3.0) (2022-10-20)
 
 
