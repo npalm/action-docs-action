@@ -25,22 +25,13 @@ In your workflow add the action, see below for the available parameters.
 The action will not commit any change, to ensure the changes are persisted you can use an action to [commit](https://github.com/stefanzweifel/git-auto-commit-action) or raise a [pull request](https://github.com/peter-evans/create-pull-request).
 
 
-<!-- action-docs-inputs -->
-## Inputs
+<!-- action-docs-inputs action="action.yml" -->
 
-| parameter | description | required | default |
-| --- | --- | --- | --- |
-| readme | Readme file to update. | `false` | README.md |
-| actionFile | THe action definition file. | `false` | action.yml |
-| tocLevel | TOC level used for the headers. | `false` | 2 |
-| lineBreaks | Line breaks to be used in updated readme (LF|CR|CRLF). | `false` | LF |
 <!-- action-docs-inputs -->
 
 
-<!-- action-docs-runs -->
-## Runs
+<!-- action-docs-runs action="action.yml" -->
 
-This action is a `node16` action.
 <!-- action-docs-runs -->
 ## License
 
