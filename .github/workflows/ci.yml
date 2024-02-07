@@ -66,14 +66,14 @@ jobs:
             })
       - name: Update dist in the repository
         if: github.event_name != 'pull_request' && matrix.node-version == 18
-        uses: stefanzweifel/git-auto-commit-action@v4.16.0
+        uses: stefanzweifel/git-auto-commit-action@v5.0.0
         with:
           commit_message: "chore(ci): Updating dist"
           file_pattern: dist/*
 
       - name: Update readme in the repository
         if: github.event_name != 'pull_request' && matrix.node-version == 18
-        uses: stefanzweifel/git-auto-commit-action@v4.16.0
+        uses: stefanzweifel/git-auto-commit-action@v5.0.0
         with:
           commit_message: "chore(ci): Updating README"
           file_pattern: README.md
