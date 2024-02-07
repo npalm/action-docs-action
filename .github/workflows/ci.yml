@@ -81,3 +81,5 @@ jobs:
         with:
           token: ${{ steps.app-token.outputs.token }}
           release-type: simple
+          next-version: v2.0.0
+          last-release-sha: b62a69e27ae389aa92b450f647d37409b9277bf0
