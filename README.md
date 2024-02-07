@@ -26,10 +26,23 @@ The action will not commit any change, to ensure the changes are persisted you c
 
 
 <!-- action-docs-inputs action="action.yml" -->
+## Inputs
+
+| name | description | required | default |
+| --- | --- | --- | --- |
+| `readme` | <p>Readme file to update.</p> | `false` | `README.md` |
+| `actionFile` | <p>THe action definition file.</p> | `false` | `action.yml` |
+| `tocLevel` | <p>TOC level used for the headers.</p> | `false` | `2` |
+| `lineBreaks` | <p>Line breaks to be used in updated readme (LF|CR|CRLF).</p> | `false` | `LF` |
+<!-- action-docs-inputs action="action.yml" -->
 
 <!-- action-docs-inputs -->
 
 
+<!-- action-docs-runs action="action.yml" -->
+## Runs
+
+This action is a `node20` action.
 <!-- action-docs-runs action="action.yml" -->
 
 <!-- action-docs-runs -->
