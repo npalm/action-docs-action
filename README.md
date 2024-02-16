@@ -2,15 +2,18 @@
   <a href="https://github.com/npalm/action-docs-action/actions"><img alt="action-docs-action status" src="https://github.com/npalm/action-docs-action/actions/workflows/ci.yml/badge.svg"></a>
 </p>
 
-# Action to update action documentation <!-- omit in toc -->
+<!-- action-docs-header action="action.yml"  -->
+
+<!-- action-docs-header -->
 
 This action wraps [action-docs](https://github.com/npalm/action-docs) to update action documentation. By default the action will update `README.md` based on the the `action.yml`. See the parameters for changing the defaults.
 
 
 ## Usages
 
-The action will update you readme by replacing html comment tags. Add one of more tags based on the following template to your repo:  `<!-- action-docs-(description | inputs | outputs | runs -->` to add the corresponding section.
+The action will update you readme by replacing html comment tags. Add one of more tags based on the following template to your repo:  `<!-- action-docs-(header | description | inputs | outputs | runs -->` to add the corresponding section.
 
+- `header` : to add/updae a header based on the name of the action
 - `description` : to add/update a section with a descriptions of the action
 - `inputs`: to add/update a section with inputs of the action
 - `outputs`: to add/update a section with outputs of the action

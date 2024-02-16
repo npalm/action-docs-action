@@ -1,5 +1,5 @@
-name: 'Action update docs action'
-description: 'Action updates the action documentation.'
+name: 'Action to update the documentation'
+description: 'Action to update the documentation.'
 author: 'Niek Palm'
 
 branding:
