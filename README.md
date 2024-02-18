@@ -26,7 +26,7 @@ The action will not commit any change, to ensure the changes are persisted you c
 
 
 <!-- action-docs-inputs action="action.yml" -->
-## Inputs
+### Inputs
 
 | name | description | required | default |
 | --- | --- | --- | --- |
@@ -38,7 +38,7 @@ The action will not commit any change, to ensure the changes are persisted you c
 
 
 <!-- action-docs-runs action="action.yml" -->
-## Runs
+### Runs
 
 This action is a `node20` action.
 <!-- action-docs-runs action="action.yml" -->
