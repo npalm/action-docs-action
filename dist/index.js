@@ -48,13 +48,14 @@ function run() {
             const tocLevel = parseInt(core.getInput('tocLevel', { required: true }));
             const actionFile = core.getInput('actionFile', { required: true });
             const lineBreaks = core.getInput('lineBreaks', { required: true });
+            const includeNameHeader = core.getInput('includeNameHeader', { required: true }) === 'true';
             yield (0, action_docs_1.generateActionMarkdownDocs)({
                 actionFile,
                 readmeFile,
                 updateReadme: true,
                 tocLevel,
                 lineBreaks,
-                includeNameHeader: true,
+                includeNameHeader,
             });
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         }
