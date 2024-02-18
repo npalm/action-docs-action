@@ -35,7 +35,7 @@ jobs:
       - name: Update docs
         uses: './'
         with:
-          tocLevel: 2
+          tocLevel: 1
 
       - name: Update dist in the repository
         if: github.ref != 'refs/heads/main'

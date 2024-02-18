@@ -2,9 +2,10 @@
   <a href="https://github.com/npalm/action-docs-action/actions"><img alt="action-docs-action status" src="https://github.com/npalm/action-docs-action/actions/workflows/ci.yml/badge.svg"></a>
 </p>
 
+<!-- action-docs-header action="action.yml" -->
+<!-- action-docs-header action="action.yml" -->
 
 This action wraps [action-docs](https://github.com/npalm/action-docs) to update action documentation. By default the action will update `README.md` based on the the `action.yml`. See the parameters for changing the defaults.
-
 
 ## Usages
 
@@ -26,7 +27,7 @@ The action will not commit any change, to ensure the changes are persisted you c
 
 
 <!-- action-docs-inputs action="action.yml" -->
-### Inputs
+## Inputs
 
 | name | description | required | default |
 | --- | --- | --- | --- |
@@ -39,7 +40,7 @@ The action will not commit any change, to ensure the changes are persisted you c
 
 
 <!-- action-docs-runs action="action.yml" -->
-### Runs
+## Runs
 
 This action is a `node20` action.
 <!-- action-docs-runs action="action.yml" -->
