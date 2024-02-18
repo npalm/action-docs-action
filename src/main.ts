@@ -7,7 +7,7 @@ async function run(): Promise<void> {
     const tocLevel: number = parseInt(core.getInput('tocLevel', { required: true }));
     const actionFile: string = core.getInput('actionFile', { required: true });
     const lineBreaks = core.getInput('lineBreaks', { required: true }) as 'LF' | 'CR' | 'CRLF';
-
+    
     await generateActionMarkdownDocs({
       actionFile,
       readmeFile,
