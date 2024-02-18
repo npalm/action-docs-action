@@ -1,5 +1,5 @@
-name: 'Action to update the documentation'
-description: 'Action to update the documentation.'
+name: 'Action to update GitHub Action documentation'
+description: 'Update docuemntation in the README file for a GitHub Action based on the action.yml.'
 author: 'Niek Palm'
 
 branding:
