@@ -14,6 +14,7 @@ async function run(): Promise<void> {
       updateReadme: true,
       tocLevel,
       lineBreaks,
+      includeNameHeader: true,
     });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
