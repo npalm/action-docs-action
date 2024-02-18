@@ -28,11 +28,11 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.10.0",
-    "action-docs": "^2.0.0"
+    "action-docs": "^2.1.0"
   },
   "devDependencies": {
-    "@types/node": "^20.11.16",
-    "@typescript-eslint/parser": "^6.21.0",
+    "@types/node": "^20.11.19",
+    "@typescript-eslint/parser": "^7.0.1",
     "@vercel/ncc": "^0.38.1",
     "eslint": "^8.37.0",
     "eslint-plugin-github": "^4.6.1",

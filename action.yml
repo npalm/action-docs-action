@@ -1,5 +1,5 @@
-name: 'Action update docs action'
-description: 'Action updates the action documentation.'
+name: 'Action to update GitHub Action documentation'
+description: 'Update docuemntation in the README file for a GitHub Action based on the action.yml.'
 author: 'Niek Palm'
 
 branding:
@@ -11,16 +11,20 @@ inputs:
     description: 'Readme file to update.'
     required: false
     default: README.md
-  actionFile: 
+  actionFile:
     description: 'THe action definition file.'
     required: false
     default: action.yml
+  includeNameHeader:
+    description: 'Include the name header in the updated readme.'
+    required: false
+    default: true
   tocLevel:
-    description: "TOC level used for the headers."
+    description: 'TOC level used for the headers. The `includeNameHeader` input is influecing the TOC level, setting `includeNameHeader` to true will increase the TOC level by 1.'
     required: false
     default: 2
   lineBreaks:
-    description: "Line breaks to be used in updated readme (LF|CR|CRLF)."
+    description: 'Line breaks to be used in updated readme (LF|CR|CRLF).'
     required: false
     default: LF
 

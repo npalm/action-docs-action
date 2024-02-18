@@ -48,12 +48,14 @@ function run() {
             const tocLevel = parseInt(core.getInput('tocLevel', { required: true }));
             const actionFile = core.getInput('actionFile', { required: true });
             const lineBreaks = core.getInput('lineBreaks', { required: true });
+            const includeNameHeader = core.getInput('includeNameHeader', { required: true }) === 'true';
             yield (0, action_docs_1.generateActionMarkdownDocs)({
                 actionFile,
                 readmeFile,
                 updateReadme: true,
                 tocLevel,
                 lineBreaks,
+                includeNameHeader,
             });
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         }
@@ -46252,6 +46254,7 @@ const defaultOptions = {
     updateReadme: false,
     readmeFile: "README.md",
     lineBreaks: "LF",
+    includeNameHeader: false,
 };
 function createMdTable(data, options, type) {
     const tableData = getInputOutput(data, type);
@@ -46273,7 +46276,7 @@ function createMdTable(data, options, type) {
 }
 function createMdCodeBlock(data, options) {
     let codeBlockArray = ["```yaml"];
-    codeBlockArray.push(`- uses: ***PROJECT***@***VERSION***`);
+    codeBlockArray.push("- uses: ***PROJECT***@***VERSION***");
     codeBlockArray.push("  with:");
     const inputs = getInputOutput(data, "input");
     for (const input of inputs.rows) {
@@ -46282,7 +46285,7 @@ function createMdCodeBlock(data, options) {
             .split(/(\r\n|\n|\r)/gm)
             .filter((l) => !["", "\r", "\n", "\r\n"].includes(l))
             .map((l) => `# ${l}`));
-        inputBlock.push(`#`);
+        inputBlock.push("#");
         inputBlock.push(`# Required: ${input[2].replace(/`/g, "")}`);
         if (input[3]) {
             inputBlock.push(`# Default: ${input[3]}`);
@@ -46315,20 +46318,27 @@ async function generateActionMarkdownDocs(inputOptions) {
     };
     const docs = generateActionDocs(options);
     if (options.updateReadme) {
+        await updateReadme(options, docs.header, "header", options.actionFile);
         await updateReadme(options, docs.description, "description", options.actionFile);
         await updateReadme(options, docs.inputs, "inputs", options.actionFile);
         await updateReadme(options, docs.outputs, "outputs", options.actionFile);
         await updateReadme(options, docs.runs, "runs", options.actionFile);
         await updateReadme(options, docs.usage, "usage", options.actionFile);
     }
-    return `${docs.description + docs.inputs + docs.outputs + docs.runs}`;
+    return `${docs.header + docs.description + docs.inputs + docs.outputs + docs.runs}`;
 }
 function generateActionDocs(options) {
     const yml = (0,dist/* parse */.Qc)((0,external_fs_.readFileSync)(options.actionFile, "utf-8"));
     const inputMdTable = createMdTable(yml.inputs, options, "input");
     const usageMdCodeBlock = createMdCodeBlock(yml.inputs, options);
     const outputMdTable = createMdTable(yml.outputs, options, "output");
+    let header = "";
+    if (options.includeNameHeader) {
+        header = createMarkdownHeader(options, yml.name);
+        options.tocLevel++;
+    }
     return {
+        header,
         description: createMarkdownSection(options, yml.description, "Description"),
         inputs: createMarkdownSection(options, inputMdTable, "Inputs"),
         outputs: createMarkdownSection(options, outputMdTable, "Outputs"),
@@ -46369,9 +46379,16 @@ async function updateReadme(options, text, section, actionFile) {
     }
 }
 function createMarkdownSection(options, data, header) {
-    return data !== ""
-        ? `${getToc(options.tocLevel)} ${header}${getLineBreak(options.lineBreaks)}${getLineBreak(options.lineBreaks)}${data}${getLineBreak(options.lineBreaks)}${getLineBreak(options.lineBreaks)}`
-        : "";
+    const lineBreak = getLineBreak(options.lineBreaks);
+    return data === "" || data === undefined
+        ? ""
+        : `${createMarkdownHeader(options, header)}${data}` +
+            `${lineBreak}` +
+            `${lineBreak}`;
+}
+function createMarkdownHeader(options, header) {
+    const lineBreak = getLineBreak(options.lineBreaks);
+    return `${getToc(options.tocLevel)} ${header}${lineBreak}${lineBreak}`;
 }
 function getInputOutput(data, type) {
     let headers = [];
