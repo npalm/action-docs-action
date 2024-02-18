@@ -5,6 +5,17 @@
 
 * Support multi-line strings ([#356](https://github.com/npalm/action-docs-action/issues/356)) ([52d5d81](https://github.com/npalm/action-docs-action/commit/52d5d817a18b108fb559fd3d25c95a2c56ef7d9c))
 
+## [3.0.0](https://github.com/npalm/action-docs-action/compare/v2.0.0...v3.0.0) (2024-02-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* add support to update header based on action name ([#425](https://github.com/npalm/action-docs-action/issues/425))
+
+### Features
+
+* add support to update header based on action name ([#425](https://github.com/npalm/action-docs-action/issues/425)) ([8f05cb8](https://github.com/npalm/action-docs-action/commit/8f05cb8002126594822305fef5e39e5efbf94373))
+
 ## [2.0.0](https://github.com/npalm/action-docs-action/compare/v1.4.0...v2.0.0) (2024-02-07)
 
 
