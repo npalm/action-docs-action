@@ -7,14 +7,15 @@ async function run(): Promise<void> {
     const tocLevel: number = parseInt(core.getInput('tocLevel', { required: true }));
     const actionFile: string = core.getInput('actionFile', { required: true });
     const lineBreaks = core.getInput('lineBreaks', { required: true }) as 'LF' | 'CR' | 'CRLF';
-    
+    const includeNameHeader = core.getInput('includeNameHeader', { required: true }) === 'true';
+
     await generateActionMarkdownDocs({
       actionFile,
       readmeFile,
       updateReadme: true,
       tocLevel,
       lineBreaks,
-      includeNameHeader: true,
+      includeNameHeader,
     });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
