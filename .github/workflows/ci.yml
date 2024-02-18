@@ -84,3 +84,18 @@ jobs:
           release-type: simple
           next-version: v2.0.0
           last-release-sha: b62a69e27ae389aa92b450f647d37409b9277bf0
+
+      - name: tag major and minor versions
+        if: ${{ steps.release.outputs.release_created }}
+        run: |
+          git config user.name semantic-releaser[bot]
+          git config user.email 102556+semantic-releaser[bot]@users.noreply.github.com
+          git remote add gh-token "https://${{ steps.app-token.outputs.token }}@github.com/npalm/action-docs-action.git"
+          git tag -d v${{ steps.release.outputs.major }} || true
+          git tag -d v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} || true
+          git push origin :v${{ steps.release.outputs.major }} || true
+          git push origin :v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} || true
+          git tag -a v${{ steps.release.outputs.major }} -m "Release v${{ steps.release.outputs.major }}"
+          git tag -a v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} -m "Release v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}"
+          git push origin v${{ steps.release.outputs.major }}
+          git push origin v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}

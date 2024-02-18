@@ -16,7 +16,7 @@ The action will update you readme by replacing html comment tags. Add one of mor
 - `description` : to add/update a section with a descriptions of the action
 - `inputs`: to add/update a section with inputs of the action
 - `outputs`: to add/update a section with outputs of the action
-- `runs`: : to add/update a section of the environment required to run.
+- `runs`: to add/update a section of the environment required to run.
 
 In your workflow add the action, see below for the available parameters.
 
