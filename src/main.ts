@@ -5,12 +5,13 @@ async function run(): Promise<void> {
   try {
     const readmeFile: string = core.getInput('readme', { required: true });
     const tocLevel: number = parseInt(core.getInput('tocLevel', { required: true }));
-    const actionFile: string = core.getInput('actionFile', { required: true });
+    const actionFile: string = core.getInput('actionFile');
+    const sourceFile: string = actionFile ?? core.getInput('sourceFile');
     const lineBreaks = core.getInput('lineBreaks', { required: true }) as 'LF' | 'CR' | 'CRLF';
     const includeNameHeader = core.getInput('includeNameHeader', { required: true }) === 'true';
 
     await generateActionMarkdownDocs({
-      actionFile,
+      sourceFile,
       readmeFile,
       updateReadme: true,
       tocLevel,
