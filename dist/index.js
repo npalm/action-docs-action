@@ -47,7 +47,7 @@ function run() {
             const readmeFile = core.getInput('readme', { required: true });
             const tocLevel = parseInt(core.getInput('tocLevel', { required: true }));
             const actionFile = core.getInput('actionFile');
-            const sourceFile = actionFile !== null && actionFile !== void 0 ? actionFile : core.getInput('sourceFile');
+            const sourceFile = actionFile || core.getInput('sourceFile');
             const lineBreaks = core.getInput('lineBreaks', { required: true });
             const includeNameHeader = core.getInput('includeNameHeader', { required: true }) === 'true';
             yield (0, action_docs_1.generateActionMarkdownDocs)({
