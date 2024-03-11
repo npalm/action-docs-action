@@ -10,56 +10,15 @@ This action wraps [action-docs](https://github.com/npalm/action-docs) to update 
 
 ## Usages
 
-The action will update your readme by replacing html comment tags. Add one of more tags based on the following template to your repo:  `<!-- action-docs-(header | description | inputs | outputs | runs | usage | all) source="action.yml" -->` to add the corresponding section.
+The action will update your readme by replacing html comment tags. Add one of more tags based on the following template to your repo:  `<!-- action-docs-(header | description | inputs | outputs | runs | usage | all) source="action-file.yml" -->` to add the corresponding section.
 
-- `header` : to add/update a header based on the name of the action/workflow
+- `header` : to add/update a header based on the name of the action/workflow (only added if action option `includeNameHeader` is set to true)
 - `description` : to add/update a section with a descriptions of the action (applicable to actions only)
 - `inputs`: to add/update a section with inputs of the action/workflow
 - `outputs`: to add/update a section with outputs of the action/workflow
 - `runs`: to add/update a section of the environment required to run (applicable to actions only)
-- `usage`: to add/update a section containing an example of how to call the action/workflow. This comment also requires passing a project and a version to use in the example e.g. `<!-- action-docs-usage source="action.yml" project="npalm/action-docs" version="v2.3.0" -->
-## Usage
-
-```yaml
-- uses: npalm/action-docs@v2.3.0
-  with:
-    readme:
-    # Readme file to update.
-    #
-    # Required: false
-    # Default: README.md
-
-    actionFile:
-    # The action definition file.
-    #
-    # Required: false
-    # Default: ""
-
-    sourceFile:
-    # The action or workflow definition file.
-    #
-    # Required: false
-    # Default: action.yml
-
-    includeNameHeader:
-    # Include the name header in the updated readme.
-    #
-    # Required: false
-    # Default: true
-
-    tocLevel:
-    # TOC level used for the headers. The `includeNameHeader` input is influecing the TOC level, setting `includeNameHeader` to true will increase the TOC level by 1.
-    #
-    # Required: false
-    # Default: 2
-
-    lineBreaks:
-    # Line breaks to be used in updated readme (LF|CR|CRLF).
-    #
-    # Required: false
-    # Default: LF
-```
-<!-- action-docs-usage source="action.yml" project="npalm/action-docs" version="v2.3.0" -->`.
+- `usage`: to add/update a section containing an example of how to call the action/workflow. This comment also requires passing a project and a version to use in the example e.g. `<!-- action-docs-usage source="action-file.yml" project="npalm/action-docs" version="v2.3.0" -->`.
+- `all`: to include all of the above in order
 
 In your workflow add the action, see below for the available parameters.
 
