@@ -10,14 +10,14 @@ This action wraps [action-docs](https://github.com/npalm/action-docs) to update 
 
 ## Usages
 
-The action will update your readme by replacing html comment tags. Add one of more tags based on the following template to your repo:  `<!-- action-docs-(header | description | inputs | outputs | runs | usage | all -->` to add the corresponding section.
+The action will update your readme by replacing html comment tags. Add one of more tags based on the following template to your repo:  `<!-- action-docs-(header | description | inputs | outputs | runs | usage | all) source="action.yml" -->` to add the corresponding section.
 
 - `header` : to add/update a header based on the name of the action/workflow
 - `description` : to add/update a section with a descriptions of the action (applicable to actions only)
 - `inputs`: to add/update a section with inputs of the action/workflow
 - `outputs`: to add/update a section with outputs of the action/workflow
 - `runs`: to add/update a section of the environment required to run (applicable to actions only)
-- `usage`: to add/update a section containing an example of how to call the action/workflow. This comment also requires passing a project and a version to use in the example e.g. `<!-- action-docs-usage project="npalm/action-docs" version="v2.3.0" -->`.
+- `usage`: to add/update a section containing an example of how to call the action/workflow. This comment also requires passing a project and a version to use in the example e.g. `<!-- action-docs-usage source="action.yml" project="npalm/action-docs" version="v2.3.0" -->`.
 
 In your workflow add the action, see below for the available parameters.
 
