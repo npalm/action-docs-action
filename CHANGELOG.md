@@ -5,6 +5,13 @@
 
 * Support multi-line strings ([#356](https://github.com/npalm/action-docs-action/issues/356)) ([52d5d81](https://github.com/npalm/action-docs-action/commit/52d5d817a18b108fb559fd3d25c95a2c56ef7d9c))
 
+## [3.1.0](https://github.com/npalm/action-docs-action/compare/v3.0.0...v3.1.0) (2024-03-14)
+
+
+### Features
+
+* add support for workflows and readme `all` option ([#436](https://github.com/npalm/action-docs-action/issues/436)) ([8b5909f](https://github.com/npalm/action-docs-action/commit/8b5909f78c4b09dd4d108d3b13ef11097bc28da2))
+
 ## [3.0.0](https://github.com/npalm/action-docs-action/compare/v2.0.0...v3.0.0) (2024-02-18)
 
 
