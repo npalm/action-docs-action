@@ -46487,6 +46487,16 @@ function getInputOutput(data, type, format = true) {
             if (columnName === "name") {
                 rowValue = key;
             }
+            else if (columnName === "description") {
+                rowValue = value[columnName];
+                if (value["deprecationMessage"] !== undefined) {
+                    rowValue += "<br/>_Deprecated";
+                    if (value["deprecationMessage"] !== "") {
+                        rowValue += `: ${value["deprecationMessage"]}`;
+                    }
+                    rowValue += "_";
+                }
+            }
             else if (columnName === "default") {
                 rowValue =
                     value[columnName] !== undefined && value[columnName] !== ""
