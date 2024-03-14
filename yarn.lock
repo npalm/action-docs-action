@@ -345,13 +345,12 @@ acorn@^8.9.0:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.11.3.tgz#71e0b14e13a4ec160724b38fb7b0f233b1b81d7a"
   integrity sha512-Y9rRfJG5jcKOE0CLisYbojUjIrIEE7AGMzA/Sm4BslANhbS+cDMpgBdcPT91oJ7OuJ9hYJBx59RjbhxVnrF8Xg==
 
-action-docs@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/action-docs/-/action-docs-2.1.0.tgz#f20c45094c2b92b2b16eab524075a113dd6b64a9"
-  integrity sha512-1XrMDfa/Su08K8BF64Rei7b3eylgi+1Bj40TL5tek52EEic3HZMtN97+iWcx+S9L+SL1oJYXZ9A6mQ5iICcQlw==
+action-docs@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/action-docs/-/action-docs-2.4.0.tgz#b3e3342ab75288b0a7258249423d6580a58b29f5"
+  integrity sha512-ALXUZDKRDfVhAvhNF9HHCRMMZXRtq00vb/rPZCJcZZOtwirch8lpWUyE727XMTjguZsK67aciV9d2VRH2opK3A==
   dependencies:
     chalk "^5.3.0"
-    eslint-import-resolver-typescript "^3.6.1"
     figlet "^1.7.0"
     replace-in-file "^7.1.0"
     showdown "^2.1.0"
@@ -750,14 +749,6 @@ emoji-regex@^9.2.2:
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-9.2.2.tgz#840c8803b0d8047f4ff0cf963176b32d4ef3ed72"
   integrity sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==
 
-enhanced-resolve@^5.12.0:
-  version "5.15.0"
-  resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-5.15.0.tgz#1af946c7d93603eb88e9896cee4904dc012e9c35"
-  integrity sha512-LXYT42KJ7lpIKECr2mAXIaMldcNCh/7E0KBKOu4KSfkHmP+mZmSs+8V5gBAqisWBy0OO4W5Oyys0GO1Y8KtdKg==
-  dependencies:
-    graceful-fs "^4.2.4"
-    tapable "^2.2.0"
-
 es-abstract@^1.22.1, es-abstract@^1.22.3:
   version "1.22.3"
   resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.22.3.tgz#48e79f5573198de6dee3589195727f4f74bc4f32"
@@ -887,20 +878,7 @@ eslint-import-resolver-node@^0.3.9:
     is-core-module "^2.13.0"
     resolve "^1.22.4"
 
-eslint-import-resolver-typescript@^3.6.1:
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-3.6.1.tgz#7b983680edd3f1c5bce1a5829ae0bc2d57fe9efa"
-  integrity sha512-xgdptdoi5W3niYeuQxKmzVDTATvLYqhpwmykwsh7f6HIOStGWEIL9iqZgQDF9u9OEzrRwR8no5q2VT+bjAujTg==
-  dependencies:
-    debug "^4.3.4"
-    enhanced-resolve "^5.12.0"
-    eslint-module-utils "^2.7.4"
-    fast-glob "^3.3.1"
-    get-tsconfig "^4.5.0"
-    is-core-module "^2.11.0"
-    is-glob "^4.0.3"
-
-eslint-module-utils@^2.7.4, eslint-module-utils@^2.8.0:
+eslint-module-utils@^2.8.0:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/eslint-module-utils/-/eslint-module-utils-2.8.0.tgz#e439fee65fc33f6bba630ff621efc38ec0375c49"
   integrity sha512-aWajIYfsqCKRDgUfjEXNN/JlrzauMuSEy5sbd7WXbtW3EH6A6MpwEh42c7qD+MqQo9QMJ6fWLAeIJynx0g6OAw==
@@ -1123,7 +1101,7 @@ fast-diff@^1.1.2:
   resolved "https://registry.yarnpkg.com/fast-diff/-/fast-diff-1.3.0.tgz#ece407fa550a64d638536cd727e129c61616e0f0"
   integrity sha512-VxPP4NqbUjj6MaAOafWeUn2cXWLcCtljklUtZf0Ind4XQ+QPtmA0b18zZy0jIQx+ExRVCR/ZQpBmik5lXshNsw==
 
-fast-glob@^3.2.9, fast-glob@^3.3.1:
+fast-glob@^3.2.9:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.3.2.tgz#a904501e57cfdd2ffcded45e99a54fef55e46129"
   integrity sha512-oX2ruAFQwf/Orj8m737Y5adxDQO0LAB7/S5MnxCdTNDd4p6BsyIVsv9JQsATbTSq8KHRpLwIHbVlUNatxd+1Ow==
@@ -1253,13 +1231,6 @@ get-symbol-description@^1.0.0:
     call-bind "^1.0.5"
     es-errors "^1.3.0"
 
-get-tsconfig@^4.5.0:
-  version "4.7.2"
-  resolved "https://registry.yarnpkg.com/get-tsconfig/-/get-tsconfig-4.7.2.tgz#0dcd6fb330391d46332f4c6c1bf89a6514c2ddce"
-  integrity sha512-wuMsz4leaj5hbGgg4IvDU0bqJagpftG5l5cXIAvo8uZrqn0NJqwtfupTN00VnkQJPcIRrxYrm1Ue24btpCha2A==
-  dependencies:
-    resolve-pkg-maps "^1.0.0"
-
 glob-parent@^5.1.2, glob-parent@~5.1.2:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-5.1.2.tgz#869832c58034fe68a4093c17dc15e8340d8401c4"
@@ -1329,11 +1300,6 @@ gopd@^1.0.1:
   integrity sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==
   dependencies:
     get-intrinsic "^1.1.3"
-
-graceful-fs@^4.2.4:
-  version "4.2.11"
-  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.11.tgz#4183e4e8bf08bb6e05bbb2f7d2e0c8f712ca40e3"
-  integrity sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==
 
 graphemer@^1.4.0:
   version "1.4.0"
@@ -1463,7 +1429,7 @@ is-callable@^1.1.3, is-callable@^1.1.4, is-callable@^1.2.7:
   resolved "https://registry.yarnpkg.com/is-callable/-/is-callable-1.2.7.tgz#3bc2a85ea742d9e36205dcacdd72ca1fdc51b055"
   integrity sha512-1BC0BVFhS/p0qtw6enp8e+8OD0UrK0oFLztSjNzhcKA3WDuJxxAPXzPuPtKkjEY9UUoEWlX/8fgKeu2S8i9JTA==
 
-is-core-module@^2.11.0, is-core-module@^2.13.0, is-core-module@^2.13.1, is-core-module@^2.8.1:
+is-core-module@^2.13.0, is-core-module@^2.13.1, is-core-module@^2.8.1:
   version "2.13.1"
   resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.13.1.tgz#ad0d7532c6fea9da1ebdc82742d74525c6273384"
   integrity sha512-hHrIjvZsftOsvKSn2TRYl63zvxsgE0K+0mYMoH6gD4omR5IWB2KynivBQczo3+wF1cCkjzvptnI9Q0sPU66ilw==
@@ -2009,11 +1975,6 @@ resolve-from@^4.0.0:
   resolved "https://registry.yarnpkg.com/resolve-from/-/resolve-from-4.0.0.tgz#4abcd852ad32dd7baabfe9b40e00a36db5f392e6"
   integrity sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==
 
-resolve-pkg-maps@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/resolve-pkg-maps/-/resolve-pkg-maps-1.0.0.tgz#616b3dc2c57056b5588c31cdf4b3d64db133720f"
-  integrity sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==
-
 resolve@^1.0.0:
   version "1.22.0"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.22.0.tgz#5e0b8c67c15df57a89bdbabe603a002f21731198"
@@ -2239,11 +2200,6 @@ synckit@^0.8.6:
   dependencies:
     "@pkgr/core" "^0.1.0"
     tslib "^2.6.2"
-
-tapable@^2.2.0:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/tapable/-/tapable-2.2.1.tgz#1967a73ef4060a82f12ab96af86d52fdb76eeca0"
-  integrity sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==
 
 text-table@^0.2.0:
   version "0.2.0"

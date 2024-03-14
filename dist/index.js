@@ -46,11 +46,12 @@ function run() {
         try {
             const readmeFile = core.getInput('readme', { required: true });
             const tocLevel = parseInt(core.getInput('tocLevel', { required: true }));
-            const actionFile = core.getInput('actionFile', { required: true });
+            const actionFile = core.getInput('actionFile');
+            const sourceFile = actionFile || core.getInput('sourceFile');
             const lineBreaks = core.getInput('lineBreaks', { required: true });
             const includeNameHeader = core.getInput('includeNameHeader', { required: true }) === 'true';
             yield (0, action_docs_1.generateActionMarkdownDocs)({
-                actionFile,
+                sourceFile,
                 readmeFile,
                 updateReadme: true,
                 tocLevel,
@@ -46250,47 +46251,89 @@ const { Converter } = showdown;
 const converter = new Converter();
 const defaultOptions = {
     tocLevel: 2,
-    actionFile: "action.yml",
+    sourceFile: "action.yml",
     updateReadme: false,
     readmeFile: "README.md",
     lineBreaks: "LF",
     includeNameHeader: false,
+};
+var InputType;
+(function (InputType) {
+    InputType[InputType["number"] = 0] = "number";
+    InputType[InputType["string"] = 1] = "string";
+    InputType[InputType["boolean"] = 2] = "boolean";
+})(InputType || (InputType = {}));
+var InputOutputType;
+(function (InputOutputType) {
+    InputOutputType[InputOutputType["actionInput"] = 0] = "actionInput";
+    InputOutputType[InputOutputType["workflowInput"] = 1] = "workflowInput";
+    InputOutputType[InputOutputType["actionOutput"] = 2] = "actionOutput";
+})(InputOutputType || (InputOutputType = {}));
+const inputOutputHeaders = {
+    [InputOutputType.actionInput]: ["name", "description", "required", "default"],
+    [InputOutputType.workflowInput]: [
+        "name",
+        "description",
+        "type",
+        "required",
+        "default",
+    ],
+    [InputOutputType.actionOutput]: ["name", "description"],
+};
+const inputOutputDefaults = {
+    description: "",
+    type: "",
+    required: "false",
+    default: '""',
 };
 function createMdTable(data, options, type) {
     const tableData = getInputOutput(data, type);
     const headers = tableData.headers;
     const filler = Array(tableData.headers.length).fill("---");
     const result = [headers, filler]
-        .concat(tableData.rows.map((line) => {
-        return line.map((elem, i) => {
-            const pretty = i === 0 || i === 2 || i === 3 ? `\`${line[i]}\`` : elem;
-            const html = i === 1 ? converter.makeHtml(pretty) : pretty;
-            const htmlNoNewlines = html.replace(/(\r\n|\n|\r)/gm, " ").trim();
-            return htmlNoNewlines;
-        });
-    }))
+        .concat(tableData.rows)
         .filter((x) => x.length > 0)
         .map((x) => `| ${x.join(" | ")} |${getLineBreak(options.lineBreaks)}`)
         .join("");
     return result;
 }
-function createMdCodeBlock(data, options) {
+function createMdCodeBlock(data, options, isAction = true) {
     let codeBlockArray = ["```yaml"];
-    codeBlockArray.push("- uses: ***PROJECT***@***VERSION***");
-    codeBlockArray.push("  with:");
-    const inputs = getInputOutput(data, "input");
-    for (const input of inputs.rows) {
-        const inputBlock = [`${input[0]}:`];
-        inputBlock.push(...input[1]
+    let indent = "";
+    if (isAction) {
+        codeBlockArray.push("- uses: ***PROJECT***@***VERSION***");
+        indent += "  ";
+    }
+    else {
+        codeBlockArray.push("jobs:");
+        indent += "  ";
+        codeBlockArray.push(`${indent}job1:`);
+        indent += "  ";
+        codeBlockArray.push(`${indent}uses: ***PROJECT***@***VERSION***`);
+    }
+    codeBlockArray.push(`${indent}with:`);
+    indent += "  ";
+    const inputs = getInputOutput(data, isAction ? InputOutputType.actionInput : InputOutputType.workflowInput, false);
+    for (const row of inputs.rows) {
+        const inputName = row[0];
+        const inputDescCommented = row[1]
             .split(/(\r\n|\n|\r)/gm)
             .filter((l) => !["", "\r", "\n", "\r\n"].includes(l))
-            .map((l) => `# ${l}`));
+            .map((l) => `# ${l}`);
+        const type = isAction ? undefined : row[2];
+        const isRequired = isAction ? row[2] : row[3];
+        const defaultVal = isAction ? row[3] : row[4];
+        const inputBlock = [`${inputName}:`];
+        inputBlock.push(...inputDescCommented);
         inputBlock.push("#");
-        inputBlock.push(`# Required: ${input[2].replace(/`/g, "")}`);
-        if (input[3]) {
-            inputBlock.push(`# Default: ${input[3]}`);
+        if (type) {
+            inputBlock.push(`# Type: ${type}`);
         }
-        codeBlockArray.push(...inputBlock.map((l) => `    ${l}`));
+        inputBlock.push(`# Required: ${isRequired}`);
+        if (defaultVal) {
+            inputBlock.push(`# Default: ${defaultVal}`);
+        }
+        codeBlockArray.push(...inputBlock.map((l) => `${indent}${l}`));
         codeBlockArray.push("");
     }
     if (inputs.rows.length > 0) {
@@ -46316,65 +46359,97 @@ async function generateActionMarkdownDocs(inputOptions) {
         ...defaultOptions,
         ...inputOptions,
     };
-    const docs = generateActionDocs(options);
-    if (options.updateReadme) {
-        await updateReadme(options, docs.header, "header", options.actionFile);
-        await updateReadme(options, docs.description, "description", options.actionFile);
-        await updateReadme(options, docs.inputs, "inputs", options.actionFile);
-        await updateReadme(options, docs.outputs, "outputs", options.actionFile);
-        await updateReadme(options, docs.runs, "runs", options.actionFile);
-        await updateReadme(options, docs.usage, "usage", options.actionFile);
+    const docs = generateDocs(options);
+    let outputString = "";
+    for (const key in docs) {
+        const value = docs[key];
+        if (options.updateReadme) {
+            await updateReadme(options, value, key, options.sourceFile);
+        }
+        outputString += value;
     }
-    return `${docs.header + docs.description + docs.inputs + docs.outputs + docs.runs}`;
+    if (options.updateReadme) {
+        await updateReadme(options, outputString, "all", options.sourceFile);
+    }
+    return outputString;
 }
-function generateActionDocs(options) {
-    const yml = (0,dist/* parse */.Qc)((0,external_fs_.readFileSync)(options.actionFile, "utf-8"));
-    const inputMdTable = createMdTable(yml.inputs, options, "input");
-    const usageMdCodeBlock = createMdCodeBlock(yml.inputs, options);
-    const outputMdTable = createMdTable(yml.outputs, options, "output");
+function generateDocs(options) {
+    const yml = (0,dist/* parse */.Qc)((0,external_fs_.readFileSync)(options.sourceFile, "utf-8"));
+    if (yml.runs === undefined) {
+        return generateWorkflowDocs(yml, options);
+    }
+    else {
+        return generateActionDocs(yml, options);
+    }
+}
+function generateActionDocs(yml, options) {
+    return {
+        header: generateHeader(yml, options),
+        description: createMarkdownSection(options, yml.description, "Description"),
+        inputs: generateInputs(yml.inputs, options, InputOutputType.actionInput),
+        outputs: generateOutputs(yml.outputs, options),
+        runs: createMarkdownSection(options, 
+        // eslint-disable-next-line i18n-text/no-en
+        `This action is a \`${yml.runs.using}\` action.`, "Runs"),
+        usage: generateUsage(yml.inputs, options),
+    };
+}
+function generateWorkflowDocs(yml, options) {
+    return {
+        header: generateHeader(yml, options),
+        inputs: generateInputs(yml.on.workflow_call?.inputs, options, InputOutputType.workflowInput),
+        outputs: generateOutputs(yml.on.workflow_call?.outputs, options),
+        runs: "",
+        usage: generateUsage(yml.on.workflow_call?.inputs, options, false),
+    };
+}
+function generateHeader(yml, options) {
     let header = "";
     if (options.includeNameHeader) {
         header = createMarkdownHeader(options, yml.name);
         options.tocLevel++;
     }
-    return {
-        header,
-        description: createMarkdownSection(options, yml.description, "Description"),
-        inputs: createMarkdownSection(options, inputMdTable, "Inputs"),
-        outputs: createMarkdownSection(options, outputMdTable, "Outputs"),
-        runs: createMarkdownSection(options, 
-        // eslint-disable-next-line i18n-text/no-en
-        `This action is a \`${yml.runs.using}\` action.`, "Runs"),
-        usage: createMarkdownSection(options, usageMdCodeBlock, "Usage"),
-    };
+    return header;
+}
+function generateInputs(data, options, type) {
+    const inputMdTable = createMdTable(data, options, type);
+    return createMarkdownSection(options, inputMdTable, "Inputs");
+}
+function generateOutputs(data, options) {
+    const outputMdTable = createMdTable(data, options, InputOutputType.actionOutput);
+    return createMarkdownSection(options, outputMdTable, "Outputs");
+}
+function generateUsage(data, options, isAction = true) {
+    const usageMdCodeBlock = createMdCodeBlock(data, options, isAction);
+    return createMarkdownSection(options, usageMdCodeBlock, "Usage");
 }
 function escapeRegExp(x) {
     return x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
 }
-async function updateReadme(options, text, section, actionFile) {
-    if (section === "usage") {
-        const readmeFileText = String((0,external_fs_.readFileSync)(options.readmeFile, "utf-8"));
-        const match = readmeFileText.match(new RegExp(`<!-- action-docs-usage action="${escapeRegExp(actionFile)}" project="(.*)" version="(.*)" -->.?`));
-        if (match) {
-            const commentExpression = `<!-- action-docs-usage action="${actionFile}" project="${match[1]}" version="${match[2]}" -->`;
-            const regexp = new RegExp(`${escapeRegExp(commentExpression)}(?:(?:\r\n|\r|\n.*)+${escapeRegExp(commentExpression)})?`);
-            await replace_in_file.replaceInFile({
-                files: options.readmeFile,
-                from: regexp,
-                to: `${commentExpression}${getLineBreak(options.lineBreaks)}${text
-                    .trim()
-                    .replace("***PROJECT***", match[1])
-                    .replace("***VERSION***", match[2])}${getLineBreak(options.lineBreaks)}${commentExpression}`,
-            });
-        }
-    }
-    else {
-        const commentExpression = `<!-- action-docs-${section} action="${actionFile}" -->`;
+async function updateReadme(options, text, section, sourceFile) {
+    const lineBreak = getLineBreak(options.lineBreaks);
+    const readmeFileText = String((0,external_fs_.readFileSync)(options.readmeFile, "utf-8"));
+    const sourceOrActionMatches = readmeFileText.match(new RegExp(`<!-- action-docs-${section} (source|action)`));
+    if (sourceOrActionMatches) {
+        const sourceOrAction = sourceOrActionMatches[1];
+        const matchProjectVersion = readmeFileText.match(new RegExp(`<!-- action-docs-${section} ${sourceOrAction}="${escapeRegExp(sourceFile)}" project="(.*)" version="(.*)" -->.?`));
+        let commentExpression = `<!-- action-docs-${section} ${sourceOrAction}="${sourceFile}" PROJECT_VERSION-->`;
+        commentExpression = commentExpression.replace("PROJECT_VERSION", matchProjectVersion
+            ? `project="${matchProjectVersion[1]}" version="${matchProjectVersion[2]}" `
+            : "");
         const regexp = new RegExp(`${escapeRegExp(commentExpression)}(?:(?:\r\n|\r|\n.*)+${escapeRegExp(commentExpression)})?`);
+        const processedText = text
+            .trim()
+            .replace("***PROJECT***", matchProjectVersion ? matchProjectVersion[1] : "")
+            .replace("***VERSION***", matchProjectVersion ? matchProjectVersion[2] : "");
         await replace_in_file.replaceInFile({
             files: options.readmeFile,
             from: regexp,
-            to: `${commentExpression}${getLineBreak(options.lineBreaks)}${text.trim()}${getLineBreak(options.lineBreaks)}${commentExpression}`,
+            to: commentExpression +
+                lineBreak +
+                processedText +
+                lineBreak +
+                commentExpression,
         });
     }
 }
@@ -46390,30 +46465,58 @@ function createMarkdownHeader(options, header) {
     const lineBreak = getLineBreak(options.lineBreaks);
     return `${getToc(options.tocLevel)} ${header}${lineBreak}${lineBreak}`;
 }
-function getInputOutput(data, type) {
+function isHtmlColumn(columnName) {
+    return columnName === "description";
+}
+function stripNewLines(value) {
+    return value.replace(/\r\n|\r|\n/g, " ");
+}
+function getInputOutput(data, type, format = true) {
     let headers = [];
     const rows = [];
     if (data === undefined) {
         return { headers, rows };
     }
-    headers =
-        type === "input"
-            ? ["name", "description", "required", "default"]
-            : ["name", "description"];
+    headers = inputOutputHeaders[type];
     for (let i = 0; i < Object.keys(data).length; i++) {
         const key = Object.keys(data)[i];
         const value = data[key];
         rows[i] = [];
-        rows[i].push(key);
-        rows[i].push(value.description ? value.description : "");
-        if (type === "input") {
-            rows[i].push(value.required ? String(value.required) : "false");
-            if (value.default !== undefined && value.default !== "") {
-                rows[i].push(value.default.toString().replace(/\r\n|\r|\n/g, " "));
+        for (const columnName of headers) {
+            let rowValue = "";
+            if (columnName === "name") {
+                rowValue = key;
+            }
+            else if (columnName === "description") {
+                rowValue = value[columnName];
+                if (value["deprecationMessage"] !== undefined) {
+                    rowValue += "<br/>_Deprecated";
+                    if (value["deprecationMessage"] !== "") {
+                        rowValue += `: ${value["deprecationMessage"]}`;
+                    }
+                    rowValue += "_";
+                }
+            }
+            else if (columnName === "default") {
+                rowValue =
+                    value[columnName] !== undefined && value[columnName] !== ""
+                        ? stripNewLines(String(value[columnName]))
+                        : inputOutputDefaults[columnName];
             }
             else {
-                rows[i].push('""');
+                rowValue = value[columnName]
+                    ? value[columnName]
+                    : inputOutputDefaults[columnName];
             }
+            if (format) {
+                if (isHtmlColumn(columnName)) {
+                    rowValue = stripNewLines(converter.makeHtml(rowValue)).trim();
+                }
+                else {
+                    rowValue = `\`${rowValue}\``;
+                }
+            }
+            rows[i].push(rowValue);
         }
     }
     return { headers, rows };

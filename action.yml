@@ -12,7 +12,11 @@ inputs:
     required: false
     default: README.md
   actionFile:
-    description: 'THe action definition file.'
+    description: 'The action definition file.'
+    required: false
+    deprecationMessage: 'This input is replaced by sourceFile'
+  sourceFile:
+    description: 'The action or workflow definition file.'
     required: false
     default: action.yml
   includeNameHeader:
