@@ -39,7 +39,7 @@ The action will not commit any change, to ensure the changes are persisted you c
 | `sourceFile` | <p>The action or workflow definition file.</p> | `false` | `action.yml` |
 | `includeNameHeader` | <p>Include the name header in the updated readme.</p> | `false` | `true` |
 | `tocLevel` | <p>TOC level used for the headers. The <code>includeNameHeader</code> input is influecing the TOC level, setting <code>includeNameHeader</code> to true will increase the TOC level by 1.</p> | `false` | `2` |
-| `lineBreaks` | <p>Line breaks to be used in updated readme (LF|CR|CRLF).</p> | `false` | `LF` |
+| `lineBreaks` | <p>Line breaks to be used in updated readme (LF, CR or CRLF).</p> | `false` | `LF` |
 <!-- action-docs-inputs source="action.yml" -->
 
 
