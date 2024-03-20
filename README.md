@@ -8,7 +8,7 @@
 
 This action wraps [action-docs](https://github.com/npalm/action-docs) to update action and workflow documentation. By default the action will update `README.md` based on the `action.yml`. See the parameters for changing the defaults.
 
-## Usages
+## Usage
 
 The action will update your readme by replacing html comment tags. Add one of more tags based on the following template to your repo:  `<!-- action-docs-(header | description | inputs | outputs | runs | usage | all) source="action-file.yml" -->` to add the corresponding section.
 
