@@ -46311,33 +46311,35 @@ function createMdCodeBlock(data, options, isAction = true) {
         indent += "  ";
         codeBlockArray.push(`${indent}uses: ***PROJECT***@***VERSION***`);
     }
-    codeBlockArray.push(`${indent}with:`);
-    indent += "  ";
     const inputs = getInputOutput(data, isAction ? InputOutputType.actionInput : InputOutputType.workflowInput, false);
-    for (const row of inputs.rows) {
-        const inputName = row[0];
-        const inputDescCommented = row[1]
-            .split(/(\r\n|\n|\r)/gm)
-            .filter((l) => !["", "\r", "\n", "\r\n"].includes(l))
-            .map((l) => `# ${l}`);
-        const type = isAction ? undefined : row[2];
-        const isRequired = isAction ? row[2] : row[3];
-        const defaultVal = isAction ? row[3] : row[4];
-        const inputBlock = [`${inputName}:`];
-        inputBlock.push(...inputDescCommented);
-        inputBlock.push("#");
-        if (type) {
-            inputBlock.push(`# Type: ${type}`);
+    if (data) {
+        codeBlockArray.push(`${indent}with:`);
+        indent += "  ";
+        for (const row of inputs.rows) {
+            const inputName = row[0];
+            const inputDescCommented = row[1]
+                .split(/(\r\n|\n|\r)/gm)
+                .filter((l) => !["", "\r", "\n", "\r\n"].includes(l))
+                .map((l) => `# ${l}`);
+            const type = isAction ? undefined : row[2];
+            const isRequired = isAction ? row[2] : row[3];
+            const defaultVal = isAction ? row[3] : row[4];
+            const inputBlock = [`${inputName}:`];
+            inputBlock.push(...inputDescCommented);
+            inputBlock.push("#");
+            if (type) {
+                inputBlock.push(`# Type: ${type}`);
+            }
+            inputBlock.push(`# Required: ${isRequired}`);
+            if (defaultVal) {
+                inputBlock.push(`# Default: ${defaultVal}`);
+            }
+            codeBlockArray.push(...inputBlock.map((l) => `${indent}${l}`));
+            codeBlockArray.push("");
         }
-        inputBlock.push(`# Required: ${isRequired}`);
-        if (defaultVal) {
-            inputBlock.push(`# Default: ${defaultVal}`);
+        if (inputs.rows.length > 0) {
+            codeBlockArray = codeBlockArray.slice(0, -1);
         }
-        codeBlockArray.push(...inputBlock.map((l) => `${indent}${l}`));
-        codeBlockArray.push("");
-    }
-    if (inputs.rows.length > 0) {
-        codeBlockArray = codeBlockArray.slice(0, -1);
     }
     codeBlockArray.push("```");
     // Create final resulting code block
