@@ -28,7 +28,7 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.10.0",
-    "action-docs": "^2.4.1"
+    "action-docs": "^2.4.3"
   },
   "devDependencies": {
     "@types/node": "^22.4.1",
