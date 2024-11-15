@@ -5,6 +5,13 @@
 
 * Support multi-line strings ([#356](https://github.com/npalm/action-docs-action/issues/356)) ([52d5d81](https://github.com/npalm/action-docs-action/commit/52d5d817a18b108fb559fd3d25c95a2c56ef7d9c))
 
+## [3.1.2](https://github.com/npalm/action-docs-action/compare/v3.1.1...v3.1.2) (2024-11-15)
+
+
+### Bug Fixes
+
+* **deps:** bump action-docs from 2.4.1 to 2.4.3 ([#516](https://github.com/npalm/action-docs-action/issues/516)) ([f949669](https://github.com/npalm/action-docs-action/commit/f949669eed381a50aad3232e1a51d02f8cb05c9b))
+
 ## [3.1.1](https://github.com/npalm/action-docs-action/compare/v3.1.0...v3.1.1) (2024-05-23)
 
 
