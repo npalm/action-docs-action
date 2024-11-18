@@ -46268,6 +46268,7 @@ var InputOutputType;
     InputOutputType[InputOutputType["actionInput"] = 0] = "actionInput";
     InputOutputType[InputOutputType["workflowInput"] = 1] = "workflowInput";
     InputOutputType[InputOutputType["actionOutput"] = 2] = "actionOutput";
+    InputOutputType[InputOutputType["workflowSecret"] = 3] = "workflowSecret";
 })(InputOutputType || (InputOutputType = {}));
 const inputOutputHeaders = {
     [InputOutputType.actionInput]: ["name", "description", "required", "default"],
@@ -46279,6 +46280,7 @@ const inputOutputHeaders = {
         "default",
     ],
     [InputOutputType.actionOutput]: ["name", "description"],
+    [InputOutputType.workflowSecret]: ["name", "description", "required"],
 };
 const inputOutputDefaults = {
     description: "",
@@ -46400,6 +46402,7 @@ function generateWorkflowDocs(yml, options) {
     return {
         header: generateHeader(yml, options),
         inputs: generateInputs(yml.on.workflow_call?.inputs, options, InputOutputType.workflowInput),
+        secrets: generateSecrets(yml.on.workflow_call?.secrets, options),
         outputs: generateOutputs(yml.on.workflow_call?.outputs, options),
         runs: "",
         usage: generateUsage(yml.on.workflow_call?.inputs, options, false),
@@ -46416,6 +46419,10 @@ function generateHeader(yml, options) {
 function generateInputs(data, options, type) {
     const inputMdTable = createMdTable(data, options, type);
     return createMarkdownSection(options, inputMdTable, "Inputs");
+}
+function generateSecrets(data, options) {
+    const secretMdTable = createMdTable(data, options, InputOutputType.workflowSecret);
+    return createMarkdownSection(options, secretMdTable, "Secrets");
 }
 function generateOutputs(data, options) {
     const outputMdTable = createMdTable(data, options, InputOutputType.actionOutput);
