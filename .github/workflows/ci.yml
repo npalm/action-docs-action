@@ -47,7 +47,7 @@ jobs:
 
       - name: Create Pull Request (main branch only)
         if: github.ref == 'refs/heads/main'
-        uses: peter-evans/create-pull-request@5e914681df9dc83aa4e4905692ca88beb2f9e91f # ratchet:peter-evans/create-pull-request@v7.0.5
+        uses: peter-evans/create-pull-request@67ccf781d68cd99b580ae25a5c18a1cc84ffff1f # ratchet:peter-evans/create-pull-request@v7.0.6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'chore(ci): Updating dist and docs'
