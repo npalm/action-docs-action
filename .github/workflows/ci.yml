@@ -40,7 +40,7 @@ jobs:
       - name: Update dist in the repository
         if: github.ref != 'refs/heads/main'
 
-        uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842 # ratchet:stefanzweifel/git-auto-commit-action@v5.0.1
+        uses: stefanzweifel/git-auto-commit-action@e348103e9026cc0eee72ae06630dbe30c8bf7a79 # ratchet:stefanzweifel/git-auto-commit-action@v5.1.0
         with:
           commit_message: 'chore(ci): Updating dist and docs'
           file_pattern: 'dist/* README.md'
