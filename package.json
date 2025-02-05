@@ -1,7 +1,6 @@
 {
   "name": "typescript-action",
   "version": "0.0.0",
-  "liccense": "MIT",
   "description": "Action updates the action documentation.",
   "main": "lib/main.js",
   "scripts": {
